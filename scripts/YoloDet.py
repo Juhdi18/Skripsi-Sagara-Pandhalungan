@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+
+import rospy
+from geometry_msgs.msg import Twist
+
 import cv2
 import torch
 import sys
@@ -5,16 +10,24 @@ import os
 
 from GeometryUtils import draw_lines_and_compute_angle
 
+def cmd_vel_publisher():
+    rospy.init_node('Cam node', anonymous=True)
+
+    pub = rospy.Publisher('/angle_cam_cmd_vel', Twist, queue_size=10)
+    rate = rospy.Rate(50)
+    twist = Twist()
+    twist.angular.z = angle
+
+    pub.publish(twist)
+    rate.sleep()
 
 FILE = os.path.dirname(os.path.abspath(__file__))
 yolov5_path = os.path.join(FILE, "yolov5")
 sys.path.append(yolov5_path)
 
-model_path = "/home/juhdi/catkin_ws/src/skripsi/data/bestv5.pt"
-video_path = "/home/juhdi/catkin_ws/src/skripsi/data/ballYolo.mp4"
+model_path = "/home/juhdi/Skripsi_ws/src/skripsi/data/bestv5.pt"
+video_path = "/home/juhdi/Skripsi_ws/src/skripsi/data/ballYolo.mp4"
 
-xt = 120
-yt = 120
 centers = {}
 
 model = torch.hub.load(
@@ -35,6 +48,9 @@ if not cap.isOpened():
 
 while True:
     ret, frame = cap.read()
+    yt, xt = frame.shape[:2]
+    xt = xt/2
+    
     if not ret:
         print("Video selesai.")
         break
@@ -77,8 +93,7 @@ while True:
          for cls, v in largest_boxes.items()]
     ) if 'largest_boxes' in locals() else results.xyxy[0]
 
-    
-
+    cmd_vel_publisher()
     output = results.render()[0]
     cv2.imshow("YOLOv5 Detection", output)
 

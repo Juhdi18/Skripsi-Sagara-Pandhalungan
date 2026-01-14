@@ -1,15 +1,17 @@
+<?xml version="1.0"?>
 <launch>
+  <param name="robot_description" textfile="$(find skripsi)/urdf/Robot.urdf" />
 
-  <!-- Load robot description -->
-  <param name="robot_description" textfile="$(find simple_4wd_robot)/urdf/robot.urdf"/>
+  <!-- GUI untuk mengontrol joint -->
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
 
-  <!-- Publish TF -->
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <!-- Node untuk robot state publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 
-  <!-- GUI to move joints -->
-  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui"/>
+  <!-- Launch RViz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find skripsi)/rviz/display_robot.rviz" />
 
-  <!-- RViz -->
-  <node name="rviz" pkg="rviz" type="rviz"/>
+  <node pkg="skripsi" type="main.py" name="Main_Controller" output="screen" />
+  <node pkg="skripsi" type="YoloDet.py" name="Cam_Yolo" output="screen" />
 
 </launch>
