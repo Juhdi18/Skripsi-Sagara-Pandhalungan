@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Robot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Dashboard Robot</h1>
+
+<div class="card">
+  <h3>Status Robot</h3>
+  <p>Nama: <span id="name"></span></p>
+  <p>Status: <span id="status"></span></p>
+  <p>Mode: <span id="mode"></span></p>
+  <p>Battery: <span id="battery"></span>%</p>
+  <p>Speed: <span id="speed"></span></p>
+</div>
+
+<div class="card">
+  <h3>Kontrol</h3>
+  <button onclick="sendCommand('start')">Start</button>
+  <button onclick="sendCommand('stop')">Stop</button>
+  <button onclick="sendCommand('forward')">Maju</button>
+  <button onclick="sendCommand('backward')">Mundur</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -12,6 +12,7 @@
   <node name="rviz" pkg="rviz" type="rviz" args="-d $(find skripsi)/rviz/display_robot.rviz" />
 
   <node pkg="skripsi" type="main.py" name="Main_Controller" output="screen" />
-  <!-- <node pkg="skripsi" type="YoloDet.py" name="Cam_Yolo" output="screen" /> -->
+  
+  <node pkg="skripsi" type="YoloDet.py" name="Cam_Yolo" output="screen" />
 
 </launch>

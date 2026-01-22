@@ -12,7 +12,7 @@ from nav_msgs.msg import Odometry
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QObject, pyqtSignal, QTimer
 
-from Interface import RobotGUI
+from GUI.main_window import RobotGUI
 from PIDAlgorithm import PID
 
 
@@ -119,9 +119,9 @@ def main():
     robot = RobotController()
 
     # ---------- CONNECT SIGNAL ----------
-    gui.pid_updated.connect(robot.update_pid)
-    gui.control_state.connect(robot.update_state)
-    robot.telemetry.connect(gui.update_telemetry)
+    gui.signals.pid_updated.connect(robot.update_pid)
+    gui.signals.control_state.connect(robot.update_state)
+    robot.telemetry.connect(gui.signals.telemetry_updated)
 
     # ---------- TIMER 10 Hz ----------
     timer = QTimer()

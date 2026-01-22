@@ -20,11 +20,33 @@ class RobotGUI(QMainWindow):
         self.init_ui()
 
     def init_ui(self):
-        central = QWidget()
-        self.setCentralWidget(central)
+        tabs = QTabWidget()
+        tabs.setTabPosition(QTabWidget.West)   # TAB SAMPING
+        self.setCentralWidget(tabs)
 
-        main_layout = QHBoxLayout()
-        central.setLayout(main_layout)
+        # =========================
+        # HOME TAB
+        # =========================
+        
+        tab_home = QWidget()
+        layout1 = QVBoxLayout()
+        layout1.addWidget(QLabel("Ini isi Tab 1"))
+        tab_home.setLayout(layout1)
+
+        # =========================
+        # MONITOR TAB
+        # =========================
+        
+        tab_monitor = QWidget()
+        layout1 = QVBoxLayout()
+        layout1.addWidget(QLabel("Ini isi Tab 2"))
+        tab_monitor.setLayout(layout1)
+
+        # =========================
+        # CONTROL TAB
+        # =========================
+        tab_control = QWidget()
+        main_layout = QHBoxLayout(tab_control)
 
         self.time_data = []
         self.heading_data = []
@@ -128,6 +150,14 @@ class RobotGUI(QMainWindow):
         right_panel.addLayout(btn_layout)
 
         main_layout.addLayout(right_panel, 3)
+
+        
+
+        tabs.addTab(tab_home, "Home")
+        tabs.addTab(tab_control, "Control")
+        tabs.addTab(tab_monitor, "Monitor")
+
+        self.setCentralWidget(tabs)
 
     def start_robot(self):
         self.control_state.emit(1)
